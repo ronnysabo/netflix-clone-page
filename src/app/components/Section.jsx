@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import "../styles/Section.css";
 
@@ -7,6 +7,37 @@ export const Section = ({ genre }) => {
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   const BASE_URL = "https://api.themoviedb.org/3";
   const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w300"; // Bas-URL för bilder
+
+  function dragToScroll(containerRef) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const end = () => {
+      isDown = false;
+      containerRef.current.classList.remove("grabbing");
+    };
+
+    const start = (e) => {
+      isDown = true;
+      startX = e.pageX || e.touches[0].pageX - containerRef.current.offsetLeft;
+      scrollLeft = containerRef.current.scrollLeft;
+      containerRef.current.classList.add("grabbing");
+    };
+
+    const move = (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX || e.touches[0].pageX - containerRef.current.offsetLeft;
+      const walk = (x - startX) * 2; // Multiplikatorn 2 ökar scroll-hastigheten
+      containerRef.current.scrollLeft = scrollLeft - walk;
+    };
+
+    return { start, end, move };
+  }
+
+  const containerRef = useRef();
+  const { start, end, move } = dragToScroll(containerRef);
 
   useEffect(() => {
     const getMoviesByGenre = async () => {
@@ -31,7 +62,16 @@ export const Section = ({ genre }) => {
   return (
     <div className="Section-row">
       <h2 className="Section-row-title m-2">{genre.name}</h2>
-      <div className="Section-row-poster flex overflow-x-scroll py-1 hide-scrollbar scroll-sideways whitespace-nowrap m-3">
+      <div
+        ref={containerRef}
+        onMouseDown={start}
+        onMouseLeave={end}
+        onMouseUp={end}
+        onMouseMove={move}
+        onTouchEnd={end}
+        onTouchMove={move}
+        className="Section-row-poster flex overflow-x-scroll py-1 hide-scrollbar scroll-sideways whitespace-nowrap m-3"
+      >
         {movies.length > 0 ? (
           movies.map((movie) => (
             <div
