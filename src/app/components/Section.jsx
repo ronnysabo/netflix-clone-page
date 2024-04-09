@@ -49,7 +49,6 @@ export const Section = ({ genre }) => {
           throw new Error("Failed to fetch movies");
         }
         const data = await response.json();
-        console.log(data);
         setMovies(data.results);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -74,16 +73,13 @@ export const Section = ({ genre }) => {
       >
         {movies.length > 0 ? (
           movies.map((movie) => (
-            <div
-              className="Section-movie inline-block w-auto mr-4 shrink-0"
-              key={movie.id}
-            >
+            <div className="Section-movie w-auto mr-4 shrink-0" key={movie.id}>
               <Image
                 src={`${IMAGE_BASE_URL}${movie.backdrop_path}`}
                 alt={movie.title}
                 width={300}
-                height={200}
-                layout="intrinsic"
+                height={100}
+                layout="responsive"
                 className="hover:scale-105 duration-300 cursor-pointer"
               />
             </div>

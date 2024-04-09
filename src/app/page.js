@@ -25,7 +25,7 @@ const Home = () => {
     };
 
     fetchGenres();
-  }, []); // API som en beroende om det kan ändras, annars kan du ta bort det
+  }, []);
 
   return (
     <div className="app">

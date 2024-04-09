@@ -8,6 +8,6 @@
 }
 
 .grabbing {
-  cursor: grab;
+  cursor: grabbing !important;
   cursor: -webkit-grabbing;
 }

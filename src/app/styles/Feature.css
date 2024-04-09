@@ -1,0 +1,22 @@
+.Feature-poster {
+  height: 600px;
+  position: relative;
+}
+
+.Feature-mask {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(37, 37, 37, 0.61),
+    #000
+  );
+  height: 10rem;
+  width: 100%;
+  z-index: 2;
+}
+
+.Feature-overview {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
