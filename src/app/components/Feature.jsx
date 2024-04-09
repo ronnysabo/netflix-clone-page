@@ -8,6 +8,11 @@ function Feature() {
   const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
+  //korta ner description om den är längre än n tecken
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  };
+
   useEffect(() => {
     const fetchFeature = async () => {
       try {
@@ -29,37 +34,41 @@ function Feature() {
   }, []);
 
   return feature ? (
-    <div
-      style={{
-        backgroundImage: `url(${IMAGE_BASE_URL}${feature.backdrop_path})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-      className="Feature-poster w-full text-white relative"
-    >
-      {/* Innehåll som visas ovanpå bakgrundsbilden */}
-      <div className="pt-60 px-10">
-        <h1 className="text-3xl font-semibold mb-4">{feature.title}</h1>
-        <div className="Feature-buttons mb-3">
-          <button className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded mr-2">
-            Play
-          </button>
-          <button className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded">
-            More info
-          </button>
-        </div>
-        <p className="Feature-overview h-24 w-1/3">{feature.overview}</p>
-      </div>
-
-      {/* Masken som visas ovanpå bakgrundsbilden */}
+    <div className="Feature-container mx-3">
       <div
-        className="Feature-mask absolute top-100 left-0 right-0 bottom-0"
+        className="Feature-poster w-full text-white"
         style={{
-          background:
-            "linear-gradient(180deg,transparent,rgba(10,10,10,0.69),#000)",
+          backgroundImage: `url(${IMAGE_BASE_URL}${feature.backdrop_path})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
-      ></div>
+      >
+        {/* Innehåll som visas ovanpå bakgrundsbilden */}
+        <div className="pt-60 px-10">
+          <h1 className="text-3xl font-semibold mb-4">{feature.title}</h1>
+          <div className="Feature-buttons mb-3">
+            <button className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded mr-2">
+              Play
+            </button>
+            <button className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded">
+              More info
+            </button>
+          </div>
+          <p className="Feature-overview h-36 max-w-[360px]">
+            {truncate(feature.overview, 150)}
+          </p>
+        </div>
+
+        {/* Masken som visas ovanpå bakgrundsbilden */}
+        <div
+          className="Feature-mask absolute top-100 left-0 right-0 bottom-0"
+          style={{
+            background:
+              "linear-gradient(180deg,transparent,rgba(10,10,10,0.69),#000)",
+          }}
+        ></div>
+      </div>
     </div>
   ) : (
     <div>Loading feature...</div>

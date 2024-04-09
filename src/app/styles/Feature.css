@@ -1,6 +1,8 @@
 .Feature-poster {
   height: 600px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .Feature-mask {
@@ -10,13 +12,10 @@
     rgba(37, 37, 37, 0.61),
     #000
   );
-  height: 10rem;
+  height: 12rem;
   width: 100%;
-  z-index: 2;
 }
 
 .Feature-overview {
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
