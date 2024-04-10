@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 
-export const Popular = () => {
+export const TopRatedMovies = () => {
   const [movies, setMovies] = useState([]);
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
   useEffect(() => {
-    const getPopularMovies = async () => {
+    const getTopRatedMovies = async () => {
       const res = await fetch(
         `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
       );
@@ -17,7 +18,7 @@ export const Popular = () => {
       console.log(data);
       setMovies(data.results);
     };
-    getPopularMovies();
+    getTopRatedMovies();
   }, []);
 
   return <div>Popular</div>;

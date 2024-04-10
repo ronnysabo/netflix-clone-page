@@ -4,7 +4,6 @@ import { Section } from "./components/Section";
 
 const Home = () => {
   const [genres, setGenres] = useState([]);
-  const [error, setError] = useState(null);
   const API = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
   useEffect(() => {
@@ -20,7 +19,6 @@ const Home = () => {
         setGenres(data.genres);
       } catch (error) {
         console.error(error);
-        setError(error.message);
       }
     };
 
@@ -29,6 +27,7 @@ const Home = () => {
 
   return (
     <div className="app">
+      <Section genre={{ name: "Top Rated" }} functionName="TopRatedMovies" />
       {genres
         ? genres.map((genre) => <Section genre={genre} key={genre.id} />)
         : null}

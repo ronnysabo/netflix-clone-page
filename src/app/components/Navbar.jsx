@@ -26,7 +26,7 @@ function Navbar() {
     <div
       className={`navbar-container ${
         isScrolled ? "bg-black bg-opacity-85" : "bg-transparent"
-      } w-full h-16 flex justify-between fixed z-10`}
+      } w-full h-16 flex justify-between fixed z-10 transition-bg duration-500`}
     >
       <Image
         className="w-36 p-3 fixed left-2"

@@ -24,7 +24,6 @@ function Feature() {
         }
         const data = await res.json();
         const rand = Math.floor(Math.random() * data.results.length);
-        console.log(data);
         setFeature(data.results[rand]);
       } catch (error) {
         console.error(error);

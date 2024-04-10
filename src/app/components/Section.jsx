@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import "../styles/Section.css";
 
-export const Section = ({ genre }) => {
+export const Section = ({ genre, functionName }) => {
   const [movies, setMovies] = useState([]);
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   const BASE_URL = "https://api.themoviedb.org/3";
@@ -39,12 +39,19 @@ export const Section = ({ genre }) => {
   const containerRef = useRef();
   const { start, end, move } = dragToScroll(containerRef);
 
+  const getMoviesUrl = () => {
+    if (functionName === "TopRatedMovies") {
+      return `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en`;
+    } else {
+      return `${BASE_URL}/discover/movie?with_genres=${genre.id}&api_key=${API_KEY}`;
+    }
+  };
+
   useEffect(() => {
     const getMoviesByGenre = async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}/discover/movie?with_genres=${genre.id}&api_key=${API_KEY}`
-        );
+        const url = getMoviesUrl();
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Failed to fetch movies");
         }
