@@ -33,18 +33,17 @@ function Feature() {
   }, []);
 
   return feature ? (
-    <div className="Feature-container mx-3">
+    <div className="Feature-container m-auto">
       <div
         className="Feature-poster w-full text-white"
         style={{
           backgroundImage: `url(${IMAGE_BASE_URL}${feature.backdrop_path})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Innehåll som visas ovanpå bakgrundsbilden */}
-        <div className="pt-60 px-10">
+        {/* Content that will be shown on top of the background image */}
+        <div className="mt-60 mx-10">
           <h1 className="text-3xl font-semibold mb-4">{feature.title}</h1>
           <div className="Feature-buttons mb-3">
             <button className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded mr-2">
@@ -59,7 +58,7 @@ function Feature() {
           </p>
         </div>
 
-        {/* Masken som visas ovanpå bakgrundsbilden */}
+        {/* The mask that will be shown on top of the background image */}
         <div
           className="Feature-mask absolute top-100 left-0 right-0 bottom-0"
           style={{

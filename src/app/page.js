@@ -18,7 +18,7 @@ const Home = () => {
         const data = await res.json();
         setGenres(data.genres);
       } catch (error) {
-        console.error(error);
+        throw new Error(error);
       }
     };
 
@@ -27,7 +27,11 @@ const Home = () => {
 
   return (
     <div className="app">
-      <Section genre={{ name: "Top Rated" }} functionName="TopRatedMovies" />
+      <Section
+        genre={{ name: "Top Rated" }}
+        functionName="TopRatedMovies"
+        poster
+      />
       {genres
         ? genres.map((genre) => <Section genre={genre} key={genre.id} />)
         : null}

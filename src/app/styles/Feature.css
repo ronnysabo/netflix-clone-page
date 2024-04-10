@@ -1,8 +1,10 @@
 .Feature-poster {
-  height: 600px;
-  position: relative;
+  height: 800px;
+  position: absolute;
   display: flex;
   align-items: center;
+  top: 0;
+  z-index: -1;
 }
 
 .Feature-mask {
