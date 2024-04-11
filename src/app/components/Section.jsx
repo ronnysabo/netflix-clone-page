@@ -1,12 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import "../styles/Section.css";
+import Youtube from "react-youtube";
+import getTrailer from "./Trailer";
 
 export const Section = ({ genre, functionName, poster }) => {
   const [movies, setMovies] = useState([]);
+  const [trailer, setTrailer] = useState(false);
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   const BASE_URL = "https://api.themoviedb.org/3";
-  const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w300"; // Bas-URL för bilder
+  const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w300";
+
+  const handleClick = async (movieId) => {
+    if (trailer) {
+      setTrailer(false);
+    } else {
+      const trailerUrl = await getTrailer(movieId);
+      setTrailer(trailerUrl);
+    }
+  };
 
   //Funktion for drag-to-scroll
   function dragToScroll(containerRef) {
@@ -97,8 +109,8 @@ export const Section = ({ genre, functionName, poster }) => {
                 alt={movie.title}
                 width={300}
                 height={100}
-                layout="responsive"
                 className="hover:scale-105 duration-300 cursor-pointer"
+                onClick={() => handleClick(movie.id)}
               />
             </div>
           ))
@@ -106,6 +118,18 @@ export const Section = ({ genre, functionName, poster }) => {
           <p>Loading movies...</p>
         )}
       </div>
+      {trailer ? (
+        <div>
+          <Youtube
+            videoId={trailer}
+            opts={{
+              width: "100%",
+              height: "520px",
+              playerVars: { autoplay: 1 },
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

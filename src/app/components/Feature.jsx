@@ -39,6 +39,7 @@ function Feature() {
         style={{
           backgroundImage: `url(${IMAGE_BASE_URL}${feature.backdrop_path})`,
           backgroundSize: "cover",
+          backgroundPosition: "50%",
           backgroundRepeat: "no-repeat",
         }}
       >
