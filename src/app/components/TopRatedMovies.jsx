@@ -21,5 +21,5 @@ export const TopRatedMovies = () => {
     getTopRatedMovies();
   }, []);
 
-  return <div>Popular</div>;
+  return;
 };

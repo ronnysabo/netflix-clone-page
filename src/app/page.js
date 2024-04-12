@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Section } from "./components/Section";
+import { NextUIProvider } from "@nextui-org/react";
 
 const Home = () => {
   const [genres, setGenres] = useState([]);
@@ -27,14 +28,16 @@ const Home = () => {
 
   return (
     <div className="app">
-      <Section
-        genre={{ name: "Top Rated" }}
-        functionName="TopRatedMovies"
-        poster
-      />
-      {genres
-        ? genres.map((genre) => <Section genre={genre} key={genre.id} />)
-        : null}
+      <NextUIProvider>
+        <Section
+          genre={{ name: "Top Rated" }}
+          functionName="TopRatedMovies"
+          poster
+        />
+        {genres
+          ? genres.map((genre) => <Section genre={genre} key={genre.id} />)
+          : null}
+      </NextUIProvider>
     </div>
   );
 };

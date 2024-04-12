@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
   background: black;
   color: white;
+}
+
+:root {
+  --nextui-background: hsl(0, 0%, 0%); /* black */
+  --nextui-foreground: hsl(0, 0%, 100%); /* white */
 }

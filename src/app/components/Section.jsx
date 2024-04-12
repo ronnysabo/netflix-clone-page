@@ -3,21 +3,34 @@ import Image from "next/image";
 import "../styles/Section.css";
 import Youtube from "react-youtube";
 import getTrailer from "./Trailer";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+} from "@nextui-org/react";
 
 export const Section = ({ genre, functionName, poster }) => {
   const [movies, setMovies] = useState([]);
   const [trailer, setTrailer] = useState(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [size, setSize] = useState("5xl");
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   const BASE_URL = "https://api.themoviedb.org/3";
   const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w300";
 
   const handleClick = async (movieId) => {
-    if (trailer) {
-      setTrailer(false);
-    } else {
-      const trailerUrl = await getTrailer(movieId);
-      setTrailer(trailerUrl);
-    }
+    const trailerUrl = await getTrailer(movieId);
+    setTrailer(trailerUrl);
+    onOpen();
+  };
+
+  const handleClose = () => {
+    setTrailer(false);
+    onOpenChange(false);
   };
 
   //Funktion for drag-to-scroll
@@ -70,6 +83,7 @@ export const Section = ({ genre, functionName, poster }) => {
           throw new Error("Failed to fetch movies");
         }
         const data = await response.json();
+        console.log(data);
         setMovies(data.results);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -80,7 +94,7 @@ export const Section = ({ genre, functionName, poster }) => {
   }, []);
 
   return (
-    <div className={`Section-row mb-4 ${poster ? "mt-[720px]" : ""}`}>
+    <div className={`Section-row relative mb-4 ${poster ? "mt-[720px]" : ""}`}>
       <h2 className="Section-row-title mx-10 text-xl my-2 font-extrabold">
         {genre.name}
       </h2>
@@ -109,6 +123,7 @@ export const Section = ({ genre, functionName, poster }) => {
                 alt={movie.title}
                 width={300}
                 height={100}
+                layout="responsive"
                 className="hover:scale-105 duration-300 cursor-pointer"
                 onClick={() => handleClick(movie.id)}
               />
@@ -118,18 +133,28 @@ export const Section = ({ genre, functionName, poster }) => {
           <p>Loading movies...</p>
         )}
       </div>
-      {trailer ? (
-        <div>
-          <Youtube
-            videoId={trailer}
-            opts={{
-              width: "100%",
-              height: "520px",
-              playerVars: { autoplay: 1 },
-            }}
-          />
-        </div>
-      ) : null}
+
+      <>
+        <Modal
+          size={size}
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          onClose={handleClose}
+        >
+          <ModalContent className="Modal-content bg-black w-full">
+            <ModalBody>
+              <Youtube
+                videoId={trailer}
+                opts={{
+                  width: "100%",
+                  height: "520px",
+                  playerVars: { autoplay: 1 },
+                }}
+              />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </>
     </div>
   );
 };

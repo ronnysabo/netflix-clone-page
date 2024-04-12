@@ -1,23 +1,37 @@
 .Feature-poster {
   height: 800px;
   position: absolute;
-  display: flex;
   align-items: center;
   top: 0;
-  z-index: -1;
+  z-index: 1;
 }
 
 .Feature-mask {
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(37, 37, 37, 0.61),
+    rgba(10, 10, 10, 0.85) 50%,
     #000
   );
   height: 12rem;
   width: 100%;
+  z-index: 7;
 }
 
-.Feature-overview {
-  overflow: hidden;
+.Feature-trailer {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+}
+
+.Feature-trailer iframe {
+  height: 800px;
+}
+
+.Feature-content {
+  position: absolute;
+  z-index: 10;
+  top: 0;
 }

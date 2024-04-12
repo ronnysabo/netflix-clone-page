@@ -15,3 +15,7 @@
   cursor: grabbing !important;
   cursor: -webkit-grabbing;
 }
+
+.Section-row {
+  z-index: 40;
+}
