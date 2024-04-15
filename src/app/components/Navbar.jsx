@@ -26,17 +26,25 @@ function Navbar() {
     <div
       className={`navbar-container ${
         isScrolled ? "bg-black bg-opacity-85" : "bg-transparent"
-      } w-full h-16 flex justify-between fixed z-10 transition-bg duration-500 top-0`}
+      } w-full h-16 flex justify-between fixed z-50 transition-bg duration-500 top-0`}
     >
       <Image
         className="w-36 p-3 fixed left-2"
         src={netflix}
         alt="netflix logo"
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
       />
       <Image
         className="w-16 p-3 fixed right-2"
         src={userImage}
         alt="netflix logo"
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
       />
     </div>
   );

@@ -15,7 +15,7 @@ import {
 
 export const Section = ({ genre, functionName, poster }) => {
   const [movies, setMovies] = useState([]);
-  const [trailer, setTrailer] = useState(false);
+  const [trailer, setTrailer] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [size, setSize] = useState("5xl");
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
@@ -83,7 +83,6 @@ export const Section = ({ genre, functionName, poster }) => {
           throw new Error("Failed to fetch movies");
         }
         const data = await response.json();
-        console.log(data);
         setMovies(data.results);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -124,7 +123,7 @@ export const Section = ({ genre, functionName, poster }) => {
                 width={300}
                 height={100}
                 layout="responsive"
-                className="hover:scale-105 duration-300 cursor-pointer"
+                className="w-auto max-w-full h-auto hover:scale-105 duration-300 cursor-pointer"
                 onClick={() => handleClick(movie.id)}
               />
             </div>
@@ -148,7 +147,13 @@ export const Section = ({ genre, functionName, poster }) => {
                 opts={{
                   width: "100%",
                   height: "520px",
-                  playerVars: { autoplay: 1 },
+                  playerVars: {
+                    autoplay: 1,
+                    controls: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                    showinfo: 0,
+                  },
                 }}
               />
             </ModalBody>
