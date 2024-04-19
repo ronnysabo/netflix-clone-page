@@ -12,7 +12,7 @@
 
 ### Responsive Design
 
-We understand the importance of accessibility across devices. Our website is fully responsive, ensuring a seamless experience whether you're browsing from a desktop, laptop, tablet, or smartphone. You can make reservations and manage your bookings on the go, without any limitations.
+We understand the importance of accessibility across devices. Our website is fully responsive, ensuring a seamless experience whether you're browsing from a desktop, laptop, tablet, or smartphone.
 
 [product-screenshot]: src/app/images/netflix-clone-image.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
