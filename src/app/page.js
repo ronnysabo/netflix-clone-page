@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Section } from "./components/Section";
 import { NextUIProvider } from "@nextui-org/react";
+import Feature from "./components/Feature";
 
 const Home = () => {
   const [genres, setGenres] = useState([]);
@@ -29,6 +30,7 @@ const Home = () => {
   return (
     <div className="app">
       <NextUIProvider>
+        <Feature />
         <Section
           genre={{ name: "Top Rated" }}
           functionName="TopRatedMovies"
