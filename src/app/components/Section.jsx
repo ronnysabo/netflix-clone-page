@@ -9,6 +9,9 @@ import {
   ModalBody,
   useDisclosure,
 } from "@nextui-org/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 export const Section = ({ genre, functionName, poster }) => {
   const [movies, setMovies] = useState([]);
@@ -30,37 +33,37 @@ export const Section = ({ genre, functionName, poster }) => {
     onOpenChange(false);
   };
 
-  //Funktion for drag-to-scroll
-  function dragToScroll(containerRef) {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+  // //Funktion for drag-to-scroll
+  // function dragToScroll(containerRef) {
+  //   let isDown = false;
+  //   let startX;
+  //   let scrollLeft;
 
-    const end = () => {
-      isDown = false;
-      containerRef.current.classList.remove("grabbing");
-    };
+  //   const end = () => {
+  //     isDown = false;
+  //     containerRef.current.classList.remove("grabbing");
+  //   };
 
-    const start = (e) => {
-      isDown = true;
-      startX = e.pageX || e.touches[0].pageX - containerRef.current.offsetLeft;
-      scrollLeft = containerRef.current.scrollLeft;
-      containerRef.current.classList.add("grabbing");
-    };
+  //   const start = (e) => {
+  //     isDown = true;
+  //     startX = e.pageX || e.touches[0].pageX - containerRef.current.offsetLeft;
+  //     scrollLeft = containerRef.current.scrollLeft;
+  //     containerRef.current.classList.add("grabbing");
+  //   };
 
-    const move = (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX || e.touches[0].pageX - containerRef.current.offsetLeft;
-      const walk = (x - startX) * 2; // Multiplier increases scroll speed
-      containerRef.current.scrollLeft = scrollLeft - walk;
-    };
+  //   const move = (e) => {
+  //     if (!isDown) return;
+  //     e.preventDefault();
+  //     const x = e.pageX || e.touches[0].pageX - containerRef.current.offsetLeft;
+  //     const walk = (x - startX) * 2; // Multiplier increases scroll speed
+  //     containerRef.current.scrollLeft = scrollLeft - walk;
+  //   };
 
-    return { start, end, move };
-  }
+  //   return { start, end, move };
+  // }
 
-  const containerRef = useRef();
-  const { start, end, move } = dragToScroll(containerRef);
+  // const containerRef = useRef();
+  // const { start, end, move } = dragToScroll(containerRef);
 
   // Function for fetching movies by genre OR top rated
   const getMoviesUrl = () => {
@@ -94,19 +97,17 @@ export const Section = ({ genre, functionName, poster }) => {
       <h2 className="Section-row-title mx-10 text-xl my-2 font-extrabold">
         {genre.name}
       </h2>
-      <div
-        ref={containerRef}
-        onMouseDown={start}
-        onMouseLeave={end}
-        onMouseUp={end}
-        onMouseMove={move}
-        onTouchEnd={end}
-        onTouchMove={move}
+      <Swiper
+        modules={[Scrollbar]}
+        spaceBetween={10}
+        slidesPerView={6}
+        scrollbar={{ draggable: true }}
+        loop={true}
         className="Section-row-poster flex overflow-x-scroll py-1 hide-scrollbar scroll-sideways whitespace-nowrap mx-10"
       >
         {movies.length > 0 ? (
           movies.map((movie) => (
-            <div
+            <SwiperSlide
               className={`Section-movie w-auto mr-4 shrink-0 ${
                 poster ? "overflow-hidden" : ""
               }`}
@@ -119,16 +120,16 @@ export const Section = ({ genre, functionName, poster }) => {
                 alt={movie.title}
                 width={300}
                 height={100}
-                layout="responsive"
+                // layout="responsive"
                 className="w-auto max-w-full h-auto hover:scale-105 duration-300 cursor-pointer"
                 onClick={() => handleClick(movie.id)}
               />
-            </div>
+            </SwiperSlide>
           ))
         ) : (
           <p>Loading movies...</p>
         )}
-      </div>
+      </Swiper>
 
       <>
         <Modal
